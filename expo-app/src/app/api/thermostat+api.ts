@@ -2,6 +2,7 @@ import { AsyncStorageKeysEnum } from "@/constants/AsyncStorageKeysEnum";
 import { failureProbability } from "@/constants/failurePercentage";
 import { waitingTime } from "@/constants/waitingTime";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import * as SQLite from "expo-sqlite";
 
 const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
@@ -11,10 +12,6 @@ const defaults = {
 };
 
 async function GET(): Promise<Response> {
-  return Response.json({
-    success: false,
-  });
-
   const backendLastUpdate = Number(
     (await AsyncStorage.getItem(AsyncStorageKeysEnum.BackendLastUpdate)) ??
       Date.now() - 1000,
