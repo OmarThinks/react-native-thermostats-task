@@ -24,22 +24,24 @@ export default function Index() {
         value={isEnabled}
       />
 
-      <View className=" self-center items-center flex-row gap-3 flex-wrap shrink">
+      <View className=" flex-row items-center gap-1 shrink">
+        <TextInput
+          value={targetTemperature}
+          style={{
+            fontSize: 48,
+            flexShrink: 1,
+            width: 150,
+            textAlign: "center",
+          }}
+        />
+        <Text style={{ fontSize: 48 }}>°C</Text>
+      </View>
+
+      <View className=" self-center items-center flex-row gap-3 flex-wrap shrink content-center justify-center">
         <IncrementButton text="<<<" onPress={() => {}} />
         <IncrementButton text="<<" onPress={() => {}} />
         <IncrementButton text="<" onPress={() => {}} />
-        <View className=" flex-row items-center gap-1 shrink">
-          <TextInput
-            value={targetTemperature}
-            style={{
-              fontSize: 32,
-              flexShrink: 1,
-              width: 150,
-              textAlign: "center",
-            }}
-          />
-          <Text style={{ fontSize: 32 }}>°C</Text>
-        </View>
+
         <IncrementButton text=">" onPress={() => {}} />
         <IncrementButton text=">>" onPress={() => {}} />
         <IncrementButton text=">>>" onPress={() => {}} />
