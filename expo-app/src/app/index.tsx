@@ -33,8 +33,6 @@ function Index() {
 
   const [postThermostatMutation, { isLoading }] = usePostThermostatMutation();
 
-  console.log("data", data, isLoading);
-
   useEffect(() => {
     if (data?.success && typeof data?.currentTemperature === "number") {
       setCurrentTemperature(data.currentTemperature);

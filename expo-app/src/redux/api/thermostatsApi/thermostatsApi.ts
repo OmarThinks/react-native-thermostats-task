@@ -37,6 +37,11 @@ const thermostatsApi = createApi({
         return await getCurrentTemperature({ canFail });
       },
     }),
+    getThermostatCronJob: builder.query({
+      queryFn: async ({ canFail }: { canFail: boolean }) => {
+        return await getCurrentTemperature({ canFail });
+      },
+    }),
   }),
 });
 
@@ -58,14 +63,7 @@ const getCurrentTemperature = async ({ canFail }: { canFail: boolean }) => {
     )) ?? defaults.backendCurrentTemperature,
   );
 
-  console.log(
-    backendLastUpdate,
-    backendCurrentTemperature,
-    backendTargetTemperature,
-  );
-
-  if (Math.abs(Date.now() - backendLastUpdate) > 100) {
-    console.log("should update");
+  if (Math.abs(Date.now() - backendLastUpdate) > 300) {
     if (
       Math.abs(backendCurrentTemperature - backendTargetTemperature) <=
       temperatureStep
@@ -118,5 +116,14 @@ const defaults = {
 
 // Export hooks for usage in functional components, which are
 // auto-generated based on the defined endpoints
-const { usePostThermostatMutation, useGetThermostatQuery } = thermostatsApi;
-export { thermostatsApi, useGetThermostatQuery, usePostThermostatMutation };
+const {
+  usePostThermostatMutation,
+  useGetThermostatQuery,
+  useGetThermostatCronJobQuery,
+} = thermostatsApi;
+export {
+  thermostatsApi,
+  useGetThermostatQuery,
+  usePostThermostatMutation,
+  useGetThermostatCronJobQuery,
+};
