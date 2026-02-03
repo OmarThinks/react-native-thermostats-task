@@ -17,7 +17,7 @@ const thermostatsApi = createApi({
       { targetTemperature: number }
     >({
       queryFn: async ({ targetTemperature }: { targetTemperature: number }) => {
-        if (Math.random() * 2 * failureProbability > failureProbability) {
+        if (Math.random() < failureProbability) {
           return Response.json({
             data: {
               success: false,
@@ -90,7 +90,7 @@ const getCurrentTemperature = async ({ canFail }: { canFail: boolean }) => {
   if (canFail) {
     await sleep(waitingTime * Math.random());
 
-    if (Math.random() * 2 * failureProbability > failureProbability) {
+    if (Math.random() < failureProbability) {
       return {
         data: {
           success: false as false,
@@ -117,14 +117,5 @@ const defaults = {
 
 // Export hooks for usage in functional components, which are
 // auto-generated based on the defined endpoints
-const {
-  useGetThermostat1Query,
-  usePostThermostatMutation,
-  useGetThermostatQuery,
-} = thermostatsApi;
-export {
-  thermostatsApi,
-  useGetThermostat1Query,
-  usePostThermostatMutation,
-  useGetThermostatQuery,
-};
+const { usePostThermostatMutation, useGetThermostatQuery } = thermostatsApi;
+export { thermostatsApi, usePostThermostatMutation, useGetThermostatQuery };
