@@ -1,8 +1,9 @@
-import { Stack } from "expo-router";
 import "@/global.css";
-import { Provider } from "react-redux";
-import { store } from "@/redux/store";
 import { useGetThermostat1Query } from "@/redux/api/thermostatsApi/thermostatsApi";
+import { store } from "@/redux/store";
+import "@/utils/polyfills";
+import { Stack } from "expo-router";
+import { Provider } from "react-redux";
 
 const AppInsideRedux = () => {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
