@@ -1,10 +1,8 @@
 import IncrementButton from "@/components/IncrementButton";
 import { useColors } from "@/constants/colors";
+import { maxTemperature, minTemperature } from "@/constants/tempratures";
 import { useState } from "react";
 import { Button, Switch, Text, View } from "react-native";
-
-const minTemperature = 0;
-const maxTemperature = 100;
 
 function Index() {
   const [isEnabled, setIsEnabled] = useState(false);
