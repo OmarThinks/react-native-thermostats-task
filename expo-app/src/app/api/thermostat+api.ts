@@ -11,6 +11,10 @@ const defaults = {
 };
 
 async function GET(): Promise<Response> {
+  return Response.json({
+    success: false,
+  });
+
   const backendLastUpdate = Number(
     (await AsyncStorage.getItem(AsyncStorageKeysEnum.BackendLastUpdate)) ??
       Date.now() - 1000,
