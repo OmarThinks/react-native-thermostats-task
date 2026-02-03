@@ -1,0 +1,5 @@
+- Reset Expo project
+- Add Native Wind
+- Add Redux
+- Implement the UI
+- Think about the plan
