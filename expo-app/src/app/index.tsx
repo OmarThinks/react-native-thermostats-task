@@ -1,16 +1,12 @@
 import IncrementButton from "@/components/IncrementButton";
 import { useColors } from "@/constants/colors";
 import { useState } from "react";
-import {
-  Text,
-  View,
-  Switch,
-  TextInput,
-  StyleSheet,
-  Button,
-} from "react-native";
+import { Button, Switch, Text, TextInput, View } from "react-native";
 
-export default function Index() {
+const minTemperature = 0;
+const maxTemperature = 100;
+
+function Index() {
   const [isEnabled, setIsEnabled] = useState(false);
   const toggleSwitch = () => setIsEnabled((previousState) => !previousState);
   const [targetTemperature, setTargetTemperature] = useState("30");
@@ -59,35 +55,59 @@ export default function Index() {
       </View>
 
       <View className=" self-center items-center flex-row gap-3 flex-wrap shrink content-center justify-center">
-        <IncrementButton text="<<<" onPress={() => {}} />
-        <IncrementButton text="<<" onPress={() => {}} />
-        <IncrementButton text="<" onPress={() => {}} />
+        <IncrementButton
+          text="<<<"
+          targetTemperature={+targetTemperature}
+          setTargetTemperature={setTargetTemperature}
+          increment={-10}
+          minTemperature={minTemperature}
+          maxTemperature={maxTemperature}
+        />
+        <IncrementButton
+          text="<<"
+          targetTemperature={+targetTemperature}
+          setTargetTemperature={setTargetTemperature}
+          increment={-1}
+          minTemperature={minTemperature}
+          maxTemperature={maxTemperature}
+        />
+        <IncrementButton
+          text="<"
+          targetTemperature={+targetTemperature}
+          setTargetTemperature={setTargetTemperature}
+          increment={-0.1}
+          minTemperature={minTemperature}
+          maxTemperature={maxTemperature}
+        />
 
-        <IncrementButton text=">" onPress={() => {}} />
-        <IncrementButton text=">>" onPress={() => {}} />
-        <IncrementButton text=">>>" onPress={() => {}} />
+        <IncrementButton
+          text=">"
+          targetTemperature={+targetTemperature}
+          setTargetTemperature={setTargetTemperature}
+          increment={0.1}
+          minTemperature={minTemperature}
+          maxTemperature={maxTemperature}
+        />
+        <IncrementButton
+          text=">>"
+          targetTemperature={+targetTemperature}
+          setTargetTemperature={setTargetTemperature}
+          increment={1}
+          minTemperature={minTemperature}
+          maxTemperature={maxTemperature}
+        />
+        <IncrementButton
+          text=">>>"
+          targetTemperature={+targetTemperature}
+          setTargetTemperature={setTargetTemperature}
+          increment={10}
+          minTemperature={minTemperature}
+          maxTemperature={maxTemperature}
+        />
       </View>
       <Button title="Crazy" />
     </View>
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flexDirection: "row", // Aligns children horizontally
-    alignItems: "center",
-    padding: 10,
-    borderWidth: 1,
-    borderColor: "gray",
-    width: "90%", // Set a fixed width for the container to see the effect
-    alignSelf: "center",
-  },
-  input: {
-    flexShrink: 1, // Allows the TextInput to shrink within its container
-    borderWidth: 1,
-    borderColor: "blue",
-    padding: 5,
-    // You might also need flex: 1 for the input to initially expand
-    // and then shrink when needed.
-  },
-});
+export default Index;
