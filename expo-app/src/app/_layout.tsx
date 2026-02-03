@@ -3,10 +3,14 @@ import "@/global.css";
 import { Provider } from "react-redux";
 import { store } from "@/redux/store";
 
-export default function RootLayout() {
+function RootLayout() {
   return (
     <Provider store={store}>
-      <Stack />
+      <Stack screenOptions={{ header: HeaderComponent }} />
     </Provider>
   );
 }
+
+const HeaderComponent = () => null;
+
+export default RootLayout;
