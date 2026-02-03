@@ -15,11 +15,21 @@ export default function Index() {
   const toggleSwitch = () => setIsEnabled((previousState) => !previousState);
   const [targetTemperature, setTargetTemperature] = useState("30");
 
+  const updateTargetTemperature = (newTemperature: string) => {
+    if (newTemperature === "") {
+      return setTargetTemperature("0");
+    }
+
+    if (+newTemperature) {
+      setTargetTemperature(newTemperature);
+    }
+  };
+
   const colors = useColors();
 
   return (
     <View
-      className="flex-1 items-center justify-center "
+      className="flex-1 items-center justify-center gap-5"
       style={{ backgroundColor: colors.background }}
     >
       <Switch
@@ -43,6 +53,7 @@ export default function Index() {
             borderWidth: 1,
             borderRadius: 16,
           }}
+          onChangeText={updateTargetTemperature}
         />
         <Text style={{ fontSize: 48, color: colors.text }}>°C</Text>
       </View>
