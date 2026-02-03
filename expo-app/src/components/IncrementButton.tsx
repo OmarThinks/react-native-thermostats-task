@@ -12,7 +12,7 @@ const IncrementButton = ({
 }: {
   text: string;
   targetTemperature: number;
-  setTargetTemperature: (newTemperature: string) => void;
+  setTargetTemperature: (newTemperature: number) => void;
   increment: number;
   minTemperature: number;
   maxTemperature: number;
@@ -21,12 +21,13 @@ const IncrementButton = ({
 
   const newTemperature = targetTemperature + increment;
 
-  const active =
-    !(newTemperature > maxTemperature) && !(newTemperature < minTemperature);
-
   const onPress = () => {
-    if (active) {
-      setTargetTemperature(`${newTemperature}`);
+    if (newTemperature >= maxTemperature) {
+      setTargetTemperature(maxTemperature);
+    } else if (newTemperature <= minTemperature) {
+      setTargetTemperature(minTemperature);
+    } else {
+      setTargetTemperature(newTemperature);
     }
   };
 
@@ -35,7 +36,6 @@ const IncrementButton = ({
       className="justify-center items-center self-stretch rounded-[16px] p-4"
       onPress={onPress}
       style={{ backgroundColor: colors.primary }}
-      disabled={!active}
     >
       <Text style={{ color: colors.text, fontSize: 24 }}>{text}</Text>
     </TouchableOpacity>

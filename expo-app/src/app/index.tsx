@@ -9,16 +9,10 @@ const maxTemperature = 100;
 function Index() {
   const [isEnabled, setIsEnabled] = useState(false);
   const toggleSwitch = () => setIsEnabled((previousState) => !previousState);
-  const [targetTemperature, setTargetTemperature] = useState("30");
+  const [targetTemperature, _setTargetTemperature] = useState(30);
 
-  const updateTargetTemperature = (newTemperature: string) => {
-    if (newTemperature === "") {
-      return setTargetTemperature("0");
-    }
-
-    if (+newTemperature) {
-      setTargetTemperature(newTemperature);
-    }
+  const setTargetTemperature = (newTemperature: number) => {
+    _setTargetTemperature(Number(newTemperature.toFixed(1)));
   };
 
   const colors = useColors();
@@ -37,27 +31,15 @@ function Index() {
       />
 
       <View className=" flex-row items-center gap-1 shrink">
-        <TextInput
-          value={targetTemperature}
-          style={{
-            fontSize: 48,
-            flexShrink: 1,
-            width: 150,
-            textAlign: "center",
-            borderColor: colors.border,
-            color: colors.text,
-            borderWidth: 1,
-            borderRadius: 16,
-          }}
-          onChangeText={updateTargetTemperature}
-        />
-        <Text style={{ fontSize: 48, color: colors.text }}>°C</Text>
+        <Text style={{ fontSize: 48, color: colors.text }}>
+          {targetTemperature} °C
+        </Text>
       </View>
 
       <View className=" self-center items-center flex-row gap-3 flex-wrap shrink content-center justify-center">
         <IncrementButton
           text="<<<"
-          targetTemperature={+targetTemperature}
+          targetTemperature={targetTemperature}
           setTargetTemperature={setTargetTemperature}
           increment={-10}
           minTemperature={minTemperature}
@@ -65,7 +47,7 @@ function Index() {
         />
         <IncrementButton
           text="<<"
-          targetTemperature={+targetTemperature}
+          targetTemperature={targetTemperature}
           setTargetTemperature={setTargetTemperature}
           increment={-1}
           minTemperature={minTemperature}
@@ -73,7 +55,7 @@ function Index() {
         />
         <IncrementButton
           text="<"
-          targetTemperature={+targetTemperature}
+          targetTemperature={targetTemperature}
           setTargetTemperature={setTargetTemperature}
           increment={-0.1}
           minTemperature={minTemperature}
@@ -82,7 +64,7 @@ function Index() {
 
         <IncrementButton
           text=">"
-          targetTemperature={+targetTemperature}
+          targetTemperature={targetTemperature}
           setTargetTemperature={setTargetTemperature}
           increment={0.1}
           minTemperature={minTemperature}
@@ -90,7 +72,7 @@ function Index() {
         />
         <IncrementButton
           text=">>"
-          targetTemperature={+targetTemperature}
+          targetTemperature={targetTemperature}
           setTargetTemperature={setTargetTemperature}
           increment={1}
           minTemperature={minTemperature}
@@ -98,7 +80,7 @@ function Index() {
         />
         <IncrementButton
           text=">>>"
-          targetTemperature={+targetTemperature}
+          targetTemperature={targetTemperature}
           setTargetTemperature={setTargetTemperature}
           increment={10}
           minTemperature={minTemperature}
