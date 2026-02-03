@@ -5,6 +5,11 @@ import { failurePercentage } from "@/constants/failurePercentage";
 
 const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
+const defaults = {
+  backendTargetTemperature: 10,
+  backendCurrentTemperature: 45,
+};
+
 async function GET(): Promise<Response> {
   const backendLastUpdate = Number(
     (await AsyncStorage.getItem(AsyncStorageKeysEnum.BackendLastUpdate)) ??
@@ -14,14 +19,14 @@ async function GET(): Promise<Response> {
   const backendTargetTemperature =
     Number(
       await AsyncStorage.getItem(AsyncStorageKeysEnum.BackendTargetTemperature),
-    ) ?? 10;
+    ) ?? defaults.backendTargetTemperature;
 
   let backendCurrentTemperature =
     Number(
       await AsyncStorage.getItem(
         AsyncStorageKeysEnum.BackendCurrentTemperature,
       ),
-    ) ?? 45;
+    ) ?? defaults.backendCurrentTemperature;
 
   if (Math.abs(Date.now() - backendLastUpdate) > 100) {
     if (Math.abs(backendCurrentTemperature - backendTargetTemperature) <= 0.1) {
@@ -57,7 +62,25 @@ async function GET(): Promise<Response> {
   }); // Success
 }
 
-function POST(request: Request) {
+async function POST(request: Request) {
+  if (Math.random() * 2 * failurePercentage > failurePercentage) {
+    return Response.json({
+      success: false,
+    });
+  } // Failure
+
+  const { targetTemperature }: { targetTemperature: number } =
+    await request.json();
+
+  if (typeof targetTemperature !== "number") {
+    return Response.json({ success: false });
+  }
+
+  await AsyncStorage.setItem(
+    AsyncStorageKeysEnum.BackendTargetTemperature,
+    targetTemperature.toFixed(1),
+  );
+
   return Response.json({ success: true });
 }
 
