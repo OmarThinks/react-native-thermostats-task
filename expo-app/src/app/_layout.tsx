@@ -10,12 +10,13 @@ import { ActivityIndicator } from "react-native";
 
 const AppInsideRedux = () => {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const _ = useGetThermostat1Query(undefined, { pollingInterval: 100 });
+  //const _ = useGetThermostat1Query(undefined, { pollingInterval: 100 });
 
   return <Stack screenOptions={{ header: HeaderComponent }} />;
 };
 
 function RootLayout() {
+  /*
   const [isDbInitialized, setIsDbInitialized] = useState(false);
 
   useEffect(() => {
@@ -26,7 +27,7 @@ function RootLayout() {
 
   if (!isDbInitialized) {
     return <ActivityIndicator />;
-  }
+  }*/
 
   return (
     <Provider store={store}>
