@@ -16,11 +16,11 @@ const thermostatsApi = createApi({
     >({
       queryFn: async ({ targetTemperature }: { targetTemperature: number }) => {
         if (Math.random() < failureProbability) {
-          return Response.json({
+          return {
             data: {
               success: false,
             },
-          });
+          };
         } // Failure
 
         await AsyncStorage.setItem(
@@ -94,7 +94,7 @@ const getCurrentTemperature = async ({ canFail }: { canFail: boolean }) => {
         data: {
           success: false as false,
         },
-      };
+      } as any;
     } // Failure
   }
 
@@ -123,7 +123,7 @@ const {
 } = thermostatsApi;
 export {
   thermostatsApi,
+  useGetThermostatCronJobQuery,
   useGetThermostatQuery,
   usePostThermostatMutation,
-  useGetThermostatCronJobQuery,
 };
