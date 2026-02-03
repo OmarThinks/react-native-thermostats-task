@@ -4,7 +4,7 @@ import { store } from "@/redux/store";
 import "@/utils/polyfills";
 import { Stack } from "expo-router";
 import { Provider } from "react-redux";
-import { initDatabase } from "@/db/initDatabase";
+import { initDatabase } from "@/db/dbFunctions";
 import { useEffect, useState } from "react";
 import { ActivityIndicator } from "react-native";
 
