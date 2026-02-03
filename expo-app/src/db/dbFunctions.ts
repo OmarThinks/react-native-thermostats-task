@@ -24,7 +24,15 @@ const initDatabase = async () => {
   }
 };
 
-const getTemperaturesFromDB = async () => {};
+const getTemperaturesFromDB = async () => {
+  const db = await SQLite.openDatabaseAsync("myAppDatabase.db");
+
+  const allRows = await db.getAllAsync("SELECT * FROM thermostats");
+
+  await db.closeAsync();
+
+  return allRows;
+};
 const setCurrentTemperatureFromDB = async (currentTemperature: number) => {
   const db = await SQLite.openDatabaseAsync("myAppDatabase.db");
   try {
@@ -32,6 +40,7 @@ const setCurrentTemperatureFromDB = async (currentTemperature: number) => {
       `UPDATE thermostats SET value = ${currentTemperature} WHERE id = ${AsyncStorageKeysEnum.BackendCurrentTemperature};`,
     );
   } catch {}
+  await db.closeAsync();
 };
 const setTargetTemperatureFromDB = async (targetTemperature: number) => {
   const db = await SQLite.openDatabaseAsync("myAppDatabase.db");
@@ -40,6 +49,7 @@ const setTargetTemperatureFromDB = async (targetTemperature: number) => {
       `UPDATE thermostats SET value = ${targetTemperature} WHERE id = ${AsyncStorageKeysEnum.BackendTargetTemperature};`,
     );
   } catch {}
+  await db.closeAsync();
 };
 
 export {
