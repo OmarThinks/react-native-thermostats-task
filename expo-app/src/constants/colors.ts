@@ -4,6 +4,7 @@ type ThemeColorsType = {
   background: string;
   text: string;
   border: string;
+  inactive: string;
 };
 
 const darkColors: ThemeColorsType = {
@@ -12,6 +13,7 @@ const darkColors: ThemeColorsType = {
   background: "#121212",
   text: "#FFFFFF",
   border: "#272727",
+  inactive: "#f4f3f4",
 };
 
 const useColors = () => {

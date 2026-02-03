@@ -1,4 +1,5 @@
 import IncrementButton from "@/components/IncrementButton";
+import { useColors } from "@/constants/colors";
 import { useState } from "react";
 import {
   Text,
@@ -14,8 +15,13 @@ export default function Index() {
   const toggleSwitch = () => setIsEnabled((previousState) => !previousState);
   const [targetTemperature, setTargetTemperature] = useState("30");
 
+  const colors = useColors();
+
   return (
-    <View className="flex-1 items-center justify-center bg-white">
+    <View
+      className="flex-1 items-center justify-center "
+      style={{ backgroundColor: colors.background }}
+    >
       <Switch
         trackColor={{ false: "#767577", true: "#81b0ff" }}
         thumbColor={isEnabled ? "#f5dd4b" : "#f4f3f4"}
@@ -32,9 +38,13 @@ export default function Index() {
             flexShrink: 1,
             width: 150,
             textAlign: "center",
+            borderColor: colors.border,
+            color: colors.text,
+            borderWidth: 1,
+            borderRadius: 16,
           }}
         />
-        <Text style={{ fontSize: 48 }}>°C</Text>
+        <Text style={{ fontSize: 48, color: colors.text }}>°C</Text>
       </View>
 
       <View className=" self-center items-center flex-row gap-3 flex-wrap shrink content-center justify-center">
