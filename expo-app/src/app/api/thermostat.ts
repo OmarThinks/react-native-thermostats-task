@@ -1,7 +1,7 @@
 import { waitingTime } from "@/constants/waitingTime";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { AsyncStorageKeysEnum } from "@/constants/AsyncStorageKeysEnum";
-import { failurePercentage } from "@/constants/failurePercentage";
+import { failureProbability } from "@/constants/failurePercentage";
 
 const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
@@ -50,7 +50,7 @@ async function GET(): Promise<Response> {
 
   await sleep(waitingTime * Math.random());
 
-  if (Math.random() * 2 * failurePercentage > failurePercentage) {
+  if (Math.random() * 2 * failureProbability > failureProbability) {
     return Response.json({
       success: false,
     });
@@ -63,7 +63,7 @@ async function GET(): Promise<Response> {
 }
 
 async function POST(request: Request) {
-  if (Math.random() * 2 * failurePercentage > failurePercentage) {
+  if (Math.random() * 2 * failureProbability > failureProbability) {
     return Response.json({
       success: false,
     });

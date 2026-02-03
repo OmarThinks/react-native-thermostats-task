@@ -1,3 +1,3 @@
-const failurePercentage = 0.25; //25%
+const failureProbability = 0.4; //40%
 
-export { failurePercentage };
+export { failureProbability };
