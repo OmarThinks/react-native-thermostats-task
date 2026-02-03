@@ -12,12 +12,6 @@ const thermostatsApi = createApi({
   reducerPath: "thermostatsApi",
   baseQuery: fetchBaseQuery({ baseUrl: "/api/" }),
   endpoints: (builder) => ({
-    getThermostat: builder.query<GetThermostatResponseType, void>({
-      query: () => `thermostat/`,
-    }),
-    getThermostat1: builder.query<GetThermostatResponseType, void>({
-      query: () => `thermostat/`,
-    }),
     postThermostat: builder.mutation<
       PostThermostatResponseType,
       { targetTemperature: number }
@@ -29,78 +23,78 @@ const thermostatsApi = createApi({
       }),
     }),
 
-    getThermostat2: builder.query({
-      async queryFn() {
-        const backendLastUpdate = Number(
-          (await AsyncStorage.getItem(
-            AsyncStorageKeysEnum.BackendLastUpdate,
-          )) ?? Date.now() - 1000,
-        );
-
-        const backendTargetTemperature = Number(
-          (await AsyncStorage.getItem(
-            AsyncStorageKeysEnum.BackendTargetTemperature,
-          )) ?? defaults.backendTargetTemperature,
-        );
-
-        let backendCurrentTemperature = Number(
-          (await AsyncStorage.getItem(
-            AsyncStorageKeysEnum.BackendCurrentTemperature,
-          )) ?? defaults.backendCurrentTemperature,
-        );
-
-        console.log(
-          backendLastUpdate,
-          backendCurrentTemperature,
-          backendTargetTemperature,
-        );
-
-        if (Math.abs(Date.now() - backendLastUpdate) > 100) {
-          console.log("should update");
-          if (
-            Math.abs(backendCurrentTemperature - backendTargetTemperature) <=
-            0.1
-          ) {
-            backendCurrentTemperature = backendTargetTemperature;
-          } else if (backendTargetTemperature > backendCurrentTemperature) {
-            backendCurrentTemperature += 0.1;
-          } else {
-            backendCurrentTemperature -= 0.1;
-          }
-          backendCurrentTemperature = Number(
-            backendCurrentTemperature.toFixed(1),
-          );
-
-          await AsyncStorage.setItem(
-            AsyncStorageKeysEnum.BackendCurrentTemperature,
-            backendCurrentTemperature.toFixed(1),
-          );
-          await AsyncStorage.setItem(
-            AsyncStorageKeysEnum.BackendLastUpdate,
-            Date.now().toString(),
-          );
-        }
-
-        await sleep(waitingTime * Math.random());
-
-        if (Math.random() * 2 * failureProbability > failureProbability) {
-          return {
-            data: {
-              success: false,
-            },
-          };
-        } // Failure
-
-        return {
-          data: {
-            success: true,
-            currentTemperature: Number(backendCurrentTemperature.toFixed(1)),
-          },
-        }; // Success
+    getThermostat: builder.query({
+      async queryFn({ canFail }: { canFail: boolean }) {
+        return await getCurrentTemperature({ canFail });
       },
     }),
   }),
 });
+
+const getCurrentTemperature = async ({ canFail }: { canFail: boolean }) => {
+  const backendLastUpdate = Number(
+    (await AsyncStorage.getItem(AsyncStorageKeysEnum.BackendLastUpdate)) ??
+      Date.now() - 1000,
+  );
+
+  const backendTargetTemperature = Number(
+    (await AsyncStorage.getItem(
+      AsyncStorageKeysEnum.BackendTargetTemperature,
+    )) ?? defaults.backendTargetTemperature,
+  );
+
+  let backendCurrentTemperature = Number(
+    (await AsyncStorage.getItem(
+      AsyncStorageKeysEnum.BackendCurrentTemperature,
+    )) ?? defaults.backendCurrentTemperature,
+  );
+
+  console.log(
+    backendLastUpdate,
+    backendCurrentTemperature,
+    backendTargetTemperature,
+  );
+
+  if (Math.abs(Date.now() - backendLastUpdate) > 100) {
+    console.log("should update");
+    if (Math.abs(backendCurrentTemperature - backendTargetTemperature) <= 0.1) {
+      backendCurrentTemperature = backendTargetTemperature;
+    } else if (backendTargetTemperature > backendCurrentTemperature) {
+      backendCurrentTemperature += 0.1;
+    } else {
+      backendCurrentTemperature -= 0.1;
+    }
+    backendCurrentTemperature = Number(backendCurrentTemperature.toFixed(1));
+
+    await AsyncStorage.setItem(
+      AsyncStorageKeysEnum.BackendCurrentTemperature,
+      backendCurrentTemperature.toFixed(1),
+    );
+    await AsyncStorage.setItem(
+      AsyncStorageKeysEnum.BackendLastUpdate,
+      Date.now().toString(),
+    );
+  }
+
+  if (canFail) {
+    await sleep(waitingTime * Math.random());
+
+    if (Math.random() * 2 * failureProbability > failureProbability) {
+      return {
+        data: {
+          success: false as false,
+        },
+      };
+    } // Failure
+  }
+
+  return {
+    data: {
+      success: true as true,
+      currentTemperature: Number(backendCurrentTemperature.toFixed(1)),
+    },
+  }; // Success
+};
 
 const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
@@ -113,14 +107,12 @@ const defaults = {
 // auto-generated based on the defined endpoints
 const {
   useGetThermostat1Query,
-  useGetThermostatQuery,
   usePostThermostatMutation,
-  useGetThermostat2Query,
+  useGetThermostatQuery,
 } = thermostatsApi;
 export {
   thermostatsApi,
   useGetThermostat1Query,
-  useGetThermostatQuery,
   usePostThermostatMutation,
-  useGetThermostat2Query,
+  useGetThermostatQuery,
 };
