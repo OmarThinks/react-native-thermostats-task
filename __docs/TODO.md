@@ -1,5 +1,7 @@
-- Reset Expo project
-- src folder
+✅
+
+- Reset Expo project ✅
+- src folder ✅
 - Add Native Wind
 - Add Redux
 - Implement the UI
