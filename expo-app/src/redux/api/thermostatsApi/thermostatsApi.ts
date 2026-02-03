@@ -16,15 +16,26 @@ const thermostatsApi = createApi({
       PostThermostatResponseType,
       { targetTemperature: number }
     >({
-      query: (targetTemperature) => ({
-        url: `thermostat/`,
-        body: { targetTemperature },
-        method: "POST",
-      }),
+      queryFn: async ({ targetTemperature }: { targetTemperature: number }) => {
+        if (Math.random() * 2 * failureProbability > failureProbability) {
+          return Response.json({
+            data: {
+              success: false,
+            },
+          });
+        } // Failure
+
+        await AsyncStorage.setItem(
+          AsyncStorageKeysEnum.BackendTargetTemperature,
+          targetTemperature.toFixed(1),
+        );
+
+        return { data: { success: true } };
+      },
     }),
 
     getThermostat: builder.query({
-      async queryFn({ canFail }: { canFail: boolean }) {
+      queryFn: async ({ canFail }: { canFail: boolean }) => {
         return await getCurrentTemperature({ canFail });
       },
     }),
@@ -92,6 +103,7 @@ const getCurrentTemperature = async ({ canFail }: { canFail: boolean }) => {
     data: {
       success: true as true,
       currentTemperature: Number(backendCurrentTemperature.toFixed(1)),
+      backendTargetTemperature,
     },
   }; // Success
 };

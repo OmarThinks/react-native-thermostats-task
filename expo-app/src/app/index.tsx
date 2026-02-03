@@ -1,9 +1,12 @@
 import IncrementButton from "@/components/IncrementButton";
 import { useColors } from "@/constants/colors";
 import { maxTemperature, minTemperature } from "@/constants/tempratures";
-import { useGetThermostatQuery } from "@/redux/api/thermostatsApi/thermostatsApi";
+import {
+  useGetThermostatQuery,
+  usePostThermostatMutation,
+} from "@/redux/api/thermostatsApi/thermostatsApi";
 import { useEffect, useState } from "react";
-import { Button, Switch, Text, View } from "react-native";
+import { Alert, Button, Switch, Text, View } from "react-native";
 
 function Index() {
   const [isEnabled, setIsEnabled] = useState(false);
@@ -19,17 +22,25 @@ function Index() {
   const [currentTemperature, setCurrentTemperature] = useState<null | number>(
     null,
   );
+  const [backendTargetTemperature, setBackendTargetTemperature] = useState<
+    null | number
+  >(null);
 
   const { data } = useGetThermostatQuery(
     { canFail: true },
     { pollingInterval: 300 },
   );
 
-  console.log("data", data);
+  const [postThermostatMutation, { isLoading }] = usePostThermostatMutation();
+
+  console.log("data", data, isLoading);
 
   useEffect(() => {
     if (data?.success && typeof data?.currentTemperature === "number") {
       setCurrentTemperature(data.currentTemperature);
+      if (typeof data?.backendTargetTemperature == "number") {
+        setBackendTargetTemperature(data.backendTargetTemperature);
+      }
     }
   }, [data]);
 
@@ -54,6 +65,13 @@ function Index() {
       <Text style={{ fontSize: 48, color: colors.text }}>
         <Text>Target Temperature: </Text>
         <Text style={{ color: colors.primary }}>{targetTemperature} °C</Text>
+      </Text>
+
+      <Text style={{ fontSize: 48, color: colors.text }}>
+        <Text>Backend Temperature: </Text>
+        <Text style={{ color: colors.primary }}>
+          {backendTargetTemperature} °C
+        </Text>
       </Text>
 
       <View className=" self-center items-center flex-row gap-3 flex-wrap shrink content-center justify-center">
@@ -106,6 +124,27 @@ function Index() {
           maxTemperature={maxTemperature}
         />
       </View>
+
+      <Button
+        title={isLoading ? "Updating....." : "Update Target Temperature"}
+        onPress={() => {
+          postThermostatMutation({ targetTemperature })
+            .then((result) => {
+              if (result.data?.success) {
+                Alert.alert("Data Updated Successfully! ✅🎉");
+              } else {
+                Alert.alert("Something went wrong, please try again later! ❌");
+              }
+            })
+            .catch(() => {
+              Alert.alert(
+                "Something went wrong, please try again later! ❌❌❌",
+              );
+            });
+        }}
+        disabled={isLoading}
+      />
+
       <Button
         title="Test"
         onPress={() => {
