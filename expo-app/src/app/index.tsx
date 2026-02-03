@@ -1,7 +1,7 @@
 import IncrementButton from "@/components/IncrementButton";
 import { useColors } from "@/constants/colors";
 import { useState } from "react";
-import { Button, Switch, Text, TextInput, View } from "react-native";
+import { Button, Switch, Text, View } from "react-native";
 
 const minTemperature = 0;
 const maxTemperature = 100;
@@ -17,6 +17,8 @@ function Index() {
 
   const colors = useColors();
 
+  const currentTemperature = 20;
+
   return (
     <View
       className="flex-1 items-center justify-center gap-5"
@@ -30,11 +32,15 @@ function Index() {
         value={isEnabled}
       />
 
-      <View className=" flex-row items-center gap-1 shrink">
-        <Text style={{ fontSize: 48, color: colors.text }}>
-          {targetTemperature} °C
-        </Text>
-      </View>
+      <Text style={{ fontSize: 48, color: colors.text }}>
+        <Text>Current Temperature: </Text>
+        <Text style={{ color: colors.primary }}>{currentTemperature} °C</Text>
+      </Text>
+
+      <Text style={{ fontSize: 48, color: colors.text }}>
+        <Text>Target Temperature: </Text>
+        <Text style={{ color: colors.primary }}>{targetTemperature} °C</Text>
+      </Text>
 
       <View className=" self-center items-center flex-row gap-3 flex-wrap shrink content-center justify-center">
         <IncrementButton
@@ -61,7 +67,6 @@ function Index() {
           minTemperature={minTemperature}
           maxTemperature={maxTemperature}
         />
-
         <IncrementButton
           text=">"
           targetTemperature={targetTemperature}
@@ -87,7 +92,16 @@ function Index() {
           maxTemperature={maxTemperature}
         />
       </View>
-      <Button title="Crazy" />
+      <Button
+        title="Test"
+        onPress={() => {
+          if (targetTemperature > 50) {
+            setTargetTemperature(0);
+          } else {
+            setTargetTemperature(100);
+          }
+        }}
+      />
     </View>
   );
 }
