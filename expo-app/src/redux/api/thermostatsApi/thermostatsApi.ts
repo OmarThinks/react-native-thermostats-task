@@ -79,15 +79,19 @@ const thermostatsApi = createApi({
         await sleep(waitingTime * Math.random());
 
         if (Math.random() * 2 * failureProbability > failureProbability) {
-          return Response.json({
-            success: false,
-          });
+          return {
+            data: {
+              success: false,
+            },
+          };
         } // Failure
 
-        return Response.json({
-          success: true,
-          currentTemperature: Number(backendCurrentTemperature.toFixed(1)),
-        }); // Success
+        return {
+          data: {
+            success: true,
+            currentTemperature: Number(backendCurrentTemperature.toFixed(1)),
+          },
+        }; // Success
       },
     }),
   }),

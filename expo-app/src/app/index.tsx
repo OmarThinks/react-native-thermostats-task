@@ -25,6 +25,8 @@ function Index() {
 
   const { data } = useGetThermostat2Query(undefined, { pollingInterval: 300 });
 
+  console.log("data", data);
+
   useEffect(() => {
     if (data?.success && typeof data?.currentTemperature === "number") {
       setCurrentTemperature(data.currentTemperature);
