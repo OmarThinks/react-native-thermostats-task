@@ -1,12 +1,10 @@
-import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import type {
-  GetThermostatResponseType,
-  PostThermostatResponseType,
-} from "./types";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import { AsyncStorageKeysEnum } from "@/constants/AsyncStorageKeysEnum";
 import { failureProbability } from "@/constants/failurePercentage";
+import { temperatureStep } from "@/constants/tempratures";
 import { waitingTime } from "@/constants/waitingTime";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import type { PostThermostatResponseType } from "./types";
 
 const thermostatsApi = createApi({
   reducerPath: "thermostatsApi",
@@ -68,12 +66,15 @@ const getCurrentTemperature = async ({ canFail }: { canFail: boolean }) => {
 
   if (Math.abs(Date.now() - backendLastUpdate) > 100) {
     console.log("should update");
-    if (Math.abs(backendCurrentTemperature - backendTargetTemperature) <= 0.1) {
+    if (
+      Math.abs(backendCurrentTemperature - backendTargetTemperature) <=
+      temperatureStep
+    ) {
       backendCurrentTemperature = backendTargetTemperature;
     } else if (backendTargetTemperature > backendCurrentTemperature) {
-      backendCurrentTemperature += 0.1;
+      backendCurrentTemperature += temperatureStep;
     } else {
-      backendCurrentTemperature -= 0.1;
+      backendCurrentTemperature -= temperatureStep;
     }
     backendCurrentTemperature = Number(backendCurrentTemperature.toFixed(1));
 
@@ -118,4 +119,4 @@ const defaults = {
 // Export hooks for usage in functional components, which are
 // auto-generated based on the defined endpoints
 const { usePostThermostatMutation, useGetThermostatQuery } = thermostatsApi;
-export { thermostatsApi, usePostThermostatMutation, useGetThermostatQuery };
+export { thermostatsApi, useGetThermostatQuery, usePostThermostatMutation };
