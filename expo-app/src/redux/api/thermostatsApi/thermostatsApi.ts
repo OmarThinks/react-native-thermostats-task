@@ -37,21 +37,26 @@ const thermostatsApi = createApi({
           )) ?? Date.now() - 1000,
         );
 
-        const backendTargetTemperature =
-          Number(
-            await AsyncStorage.getItem(
-              AsyncStorageKeysEnum.BackendTargetTemperature,
-            ),
-          ) ?? defaults.backendTargetTemperature;
+        const backendTargetTemperature = Number(
+          (await AsyncStorage.getItem(
+            AsyncStorageKeysEnum.BackendTargetTemperature,
+          )) ?? defaults.backendTargetTemperature,
+        );
 
-        let backendCurrentTemperature =
-          Number(
-            await AsyncStorage.getItem(
-              AsyncStorageKeysEnum.BackendCurrentTemperature,
-            ),
-          ) ?? defaults.backendCurrentTemperature;
+        let backendCurrentTemperature = Number(
+          (await AsyncStorage.getItem(
+            AsyncStorageKeysEnum.BackendCurrentTemperature,
+          )) ?? defaults.backendCurrentTemperature,
+        );
+
+        console.log(
+          backendLastUpdate,
+          backendCurrentTemperature,
+          backendTargetTemperature,
+        );
 
         if (Math.abs(Date.now() - backendLastUpdate) > 100) {
+          console.log("should update");
           if (
             Math.abs(backendCurrentTemperature - backendTargetTemperature) <=
             0.1
