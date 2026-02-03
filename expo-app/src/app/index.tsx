@@ -1,7 +1,8 @@
 import IncrementButton from "@/components/IncrementButton";
 import { useColors } from "@/constants/colors";
 import { maxTemperature, minTemperature } from "@/constants/tempratures";
-import { useState } from "react";
+import { useGetThermostatQuery } from "@/redux/api/thermostatsApi/thermostatsApi";
+import { useEffect, useState } from "react";
 import { Button, Switch, Text, View } from "react-native";
 
 function Index() {
@@ -15,7 +16,17 @@ function Index() {
 
   const colors = useColors();
 
-  const currentTemperature = 20;
+  const [currentTemperature, setCurrentTemperature] = useState<null | number>(
+    null,
+  );
+
+  const { data } = useGetThermostatQuery(undefined, { pollingInterval: 300 });
+
+  useEffect(() => {
+    if (data?.success && typeof data?.currentTemperature === "number") {
+      setCurrentTemperature(data.currentTemperature);
+    }
+  }, [data]);
 
   return (
     <View

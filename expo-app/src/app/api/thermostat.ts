@@ -1,7 +1,7 @@
-import { waitingTime } from "@/constants/waitingTime";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import { AsyncStorageKeysEnum } from "@/constants/AsyncStorageKeysEnum";
 import { failureProbability } from "@/constants/failurePercentage";
+import { waitingTime } from "@/constants/waitingTime";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 

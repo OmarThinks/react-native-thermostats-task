@@ -1,7 +1,12 @@
 import { configureStore } from "@reduxjs/toolkit";
+import { thermostatsApi } from "./api/thermostatsApi/thermostatsApi";
 
 const store = configureStore({
-  reducer: {},
+  reducer: {
+    [thermostatsApi.reducerPath]: thermostatsApi.reducer,
+  },
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware().concat(thermostatsApi.middleware),
 });
 
 // Infer the `RootState` and `AppDispatch` types from the store itself
