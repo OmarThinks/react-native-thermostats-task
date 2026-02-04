@@ -3,7 +3,7 @@
 ## 1) Links:
 
 - Deployment: https://react-native-thermostats-task-346936176354.europe-west1.run.app/
-- YouTube:
+- YouTube: https://www.youtube.com/watch?v=VcSdHV8YYJA
 
 ## 2) Media:
 
