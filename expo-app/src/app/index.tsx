@@ -96,6 +96,11 @@ function Index() {
             </Text>
           </TouchableOpacity>
 
+          <View />
+          <View />
+          <View />
+          <View />
+
           <Text style={{ fontSize: 48, color: colors.text }}>
             <Text>Current Temperature: </Text>
             <Text style={{ color: colors.primary }}>
@@ -104,16 +109,21 @@ function Index() {
           </Text>
 
           <Text style={{ fontSize: 48, color: colors.text }}>
-            <Text>Target Temperature: </Text>
-            <Text style={{ color: colors.primary }}>
-              {targetTemperature} °C
-            </Text>
-          </Text>
-
-          <Text style={{ fontSize: 48, color: colors.text }}>
             <Text>Backend Temperature: </Text>
             <Text style={{ color: colors.primary }}>
               {backendTargetTemperature} °C
+            </Text>
+          </Text>
+
+          <View />
+          <View />
+          <View />
+          <View />
+
+          <Text style={{ fontSize: 48, color: colors.text }}>
+            <Text>Target Temperature: </Text>
+            <Text style={{ color: colors.primary }}>
+              {targetTemperature} °C
             </Text>
           </Text>
 
