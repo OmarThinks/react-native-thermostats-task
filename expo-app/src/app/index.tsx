@@ -19,9 +19,9 @@ import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 function Index() {
-  const [isConnectedToInternet, setIsConnectedToInternet] = useState(false);
-  const toggleIsConnectedToInternet = () =>
-    setIsConnectedToInternet((previousState) => !previousState);
+  const [isInternetConnected, setIsInternetConnected] = useState(true);
+  const toggleIsInternetConnected = () =>
+    setIsInternetConnected((previousState) => !previousState);
   const [targetTemperature, _setTargetTemperature] = useState(30);
 
   const setTargetTemperature = (newTemperature: number) => {
@@ -39,7 +39,7 @@ function Index() {
 
   const { data } = useGetThermostatQuery(
     { canFail: true },
-    { pollingInterval: 300 },
+    { pollingInterval: 300, skip: !isInternetConnected },
   );
 
   const [postThermostatMutation, { isLoading }] = usePostThermostatMutation();
@@ -68,15 +68,15 @@ function Index() {
         <TouchableOpacity
           className=" flex-row gap-4 items-center p-4 rounded-full self-center"
           style={{
-            backgroundColor: isConnectedToInternet
+            backgroundColor: isInternetConnected
               ? colors.primary
               : colors.error,
           }}
-          onPress={toggleIsConnectedToInternet}
+          onPress={toggleIsInternetConnected}
         >
           <MaterialIcons color={colors.text} name={"wifi"} size={32} />
           <Text style={{ color: colors.text, fontSize: 32 }}>
-            {isConnectedToInternet ? "Connected" : "Not Connected"}
+            {isInternetConnected ? "Connected" : "Not Connected"}
           </Text>
         </TouchableOpacity>
 

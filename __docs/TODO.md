@@ -1,9 +1,12 @@
 ✅
 
-- Update the button of the internet connection
-- Make this button actually prevent refetching in the home screen
+- Update the button of the internet connection ✅
+- Separate between the cron job and getting the result
+- Make this button actually prevent refetching in the home screen ✅
 - Make this button not update the Target temperature on backend
 - Display an error on failing to send the request to update the target temperature on backend
+- Display a toast on updating backend
+- Initialize variables
 - Scroll view and safeaREA VIEW
 - AppBar
 - Document

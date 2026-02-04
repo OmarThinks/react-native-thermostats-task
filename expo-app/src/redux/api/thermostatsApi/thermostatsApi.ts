@@ -109,11 +109,6 @@ const getCurrentTemperature = async ({ canFail }: { canFail: boolean }) => {
 
 const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
-const defaults = {
-  backendTargetTemperature: 10,
-  backendCurrentTemperature: 45,
-};
-
 // Export hooks for usage in functional components, which are
 // auto-generated based on the defined endpoints
 const {
