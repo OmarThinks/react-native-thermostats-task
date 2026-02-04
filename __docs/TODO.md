@@ -13,8 +13,8 @@
 - Display a toast on updating backend ✅
 - AppBar ✅
 - Check Mobile ✅
+- Create a docker file ✅
+- Deploy ✅
 - Document
 - Any final thoughts?
-- Create a docker file
-- Deploy
 - Record video

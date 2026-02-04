@@ -1,2 +1,0 @@
-- Using RTKQuery bacause it automaticall handles the race condition
-- In the `_layout.tsx` file, keeping fetching as a cronjob
