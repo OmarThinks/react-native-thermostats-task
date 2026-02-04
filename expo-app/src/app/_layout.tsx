@@ -1,20 +1,21 @@
 import { AsyncStorageKeysEnum } from "@/constants/AsyncStorageKeysEnum";
+import { useColors } from "@/constants/colors";
+import { defaultTemperatures } from "@/constants/tempratures";
 import "@/global.css";
 import { store } from "@/redux/store";
-import { updateCurrentTemperatureCronJob } from "@/utils/thermostats";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import { Stack } from "expo-router";
-import { useEffect, useState } from "react";
-import { Provider } from "react-redux";
 import {
   useUpdateBackendTargetTemperature,
   useUpdateCurrentTemperature,
   useUpdateIsInternetConnected,
   useUpdateTargetTemperature,
 } from "@/redux/temperaturesSlice/temperaturesSlice";
-import { defaultTemperatures } from "@/constants/tempratures";
+import { updateCurrentTemperatureCronJob } from "@/utils/thermostats";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { Stack } from "expo-router";
+import { StatusBar } from "expo-status-bar";
+import { useEffect, useState } from "react";
 import { ActivityIndicator, View } from "react-native";
-import { useColors } from "@/constants/colors";
+import { Provider } from "react-redux";
 
 const AppInsideRedux = () => {
   // This works as a cronjob
@@ -90,6 +91,7 @@ function RootLayout() {
   return (
     <Provider store={store}>
       <AppInsideRedux />
+      <StatusBar style="light" />
     </Provider>
   );
 }

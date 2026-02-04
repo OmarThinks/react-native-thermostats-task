@@ -6,7 +6,7 @@
 - Async Storage, to initialize everything
   - Use the values from redux ✅
   - Update the values in Redux ✅
-  - Initialize
+  - Initialize ✅
 - Display toast
 - Make this button not update the Target temperature on backend when not connected to internet
 - Display an error on failing to send the request to update the target temperature on backend
