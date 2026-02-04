@@ -210,7 +210,6 @@ function Index() {
       </ScrollView>
 
       <Modal
-        //style={{ backgroundColor: "red", width: 80, height: 80 }}
         onDismiss={() => {
           setModalMessage("");
         }}
@@ -222,11 +221,12 @@ function Index() {
         }}
       >
         <View
-          className=" justify-center items-center flex-1 self-stretch bg-red-200 "
+          className=" justify-center items-center flex-1 self-stretch  "
           //style={{ width: 300, height: 300 }}
+          style={{ backgroundColor: "#000000bb" }}
         >
           <TouchableOpacity
-            style={{ backgroundColor: "#333333", zIndex: 1 }}
+            style={{ zIndex: 1 }}
             className=" self-stretch flex-1 absolute w-full h-full"
             onPress={() => {
               setModalMessage("");
@@ -238,14 +238,17 @@ function Index() {
             style={{
               zIndex: 3,
               pointerEvents: "none",
-              backgroundColor: "green",
-              width: 300,
-              height: 300,
+              backgroundColor: colors.background,
             }}
             disabled
           >
             <View className=" self-stretch flex-1">
-              <Text>{modalMessage}</Text>
+              <Text
+                style={{ color: colors.text }}
+                className=" text-[48px] p-12"
+              >
+                {modalMessage}
+              </Text>
             </View>
           </TouchableOpacity>
         </View>
