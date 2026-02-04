@@ -170,7 +170,7 @@ function Index() {
         />
 
         <Button
-          title="Test"
+          title="Extreme"
           onPress={() => {
             if (targetTemperature > 50) {
               setTargetTemperature(0);

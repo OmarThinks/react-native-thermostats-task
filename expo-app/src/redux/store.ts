@@ -1,9 +1,12 @@
 import { configureStore } from "@reduxjs/toolkit";
+import { useDispatch } from "react-redux";
 import { thermostatsApi } from "./api/thermostatsApi/thermostatsApi";
+import { temperaturesSlice } from "./temperaturesSlice/temperaturesSlice";
 
 const store = configureStore({
   reducer: {
     [thermostatsApi.reducerPath]: thermostatsApi.reducer,
+    [temperaturesSlice.name]: temperaturesSlice.reducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(thermostatsApi.middleware),
@@ -14,5 +17,7 @@ type RootState = ReturnType<typeof store.getState>;
 // Inferred type: {posts: PostsState, comments: CommentsState, users: UsersState}
 type AppDispatch = typeof store.dispatch;
 
-export { store };
-export type { RootState, AppDispatch };
+const useAppDispatch: () => AppDispatch = useDispatch;
+
+export { store, useAppDispatch };
+export type { AppDispatch, RootState };

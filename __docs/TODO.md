@@ -1,8 +1,10 @@
 ✅
 
 - Update the button of the internet connection ✅
-- Separate between the cron job and getting the result
+- Separate between the cron job and getting the result ✅
 - Make this button actually prevent refetching in the home screen ✅
+- Async Storage, to initialize everything
+- Display toast
 - Make this button not update the Target temperature on backend
 - Display an error on failing to send the request to update the target temperature on backend
 - Display a toast on updating backend
