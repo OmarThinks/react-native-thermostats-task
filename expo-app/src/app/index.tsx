@@ -18,14 +18,12 @@ import {
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import { useEffect, useState } from "react";
 import {
-  Alert,
   Button,
+  Modal,
   ScrollView,
   Text,
   TouchableOpacity,
   View,
-  Modal,
-  TouchableWithoutFeedback,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
@@ -173,29 +171,34 @@ function Index() {
           <Button
             title={isLoading ? "Updating....." : "Update Target Temperature"}
             onPress={() => {
+              if (!isInternetConnected) {
+                setModalMessage(
+                  "No Internet connection. Please try again later!",
+                );
+                return;
+              }
+
               postThermostatMutation({ targetTemperature })
                 .then((result) => {
                   if (result.data?.success) {
-                    Alert.alert("Data Updated Successfully! ✅🎉");
                   } else {
-                    Alert.alert(
+                    setModalMessage(
                       "Something went wrong, please try again later! ❌",
                     );
                   }
                 })
                 .catch(() => {
-                  Alert.alert(
-                    "Something went wrong, please try again later! ❌❌❌",
+                  setModalMessage(
+                    "Something went wrong, please try again later! ❌",
                   );
                 });
             }}
-            disabled={isLoading || !isInternetConnected}
+            disabled={isLoading}
           />
 
           <Button
             title="Extreme"
             onPress={() => {
-              setModalMessage("Hi");
               if (targetTemperature > 50) {
                 setTargetTemperature(0);
               } else {
