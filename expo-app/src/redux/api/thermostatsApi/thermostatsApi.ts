@@ -44,8 +44,6 @@ const getCurrentTemperature = async () => {
   await sleep(waitingTime * Math.random());
 
   if (Math.random() < failureProbability) {
-    console.log("failure");
-
     return {
       data: {
         success: false as false,
@@ -56,7 +54,6 @@ const getCurrentTemperature = async () => {
   let { backendCurrentTemperature, backendTargetTemperature } =
     await getCurrentTemperatureAndTargetTemperatureAsync();
 
-  console.log("success", backendCurrentTemperature);
   return {
     data: {
       success: true as true,

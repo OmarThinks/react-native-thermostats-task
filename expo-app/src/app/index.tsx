@@ -16,7 +16,7 @@ import {
   useUpdateTargetTemperature,
 } from "@/redux/temperaturesSlice/temperaturesSlice";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import {
   Alert,
   Button,
@@ -24,6 +24,8 @@ import {
   Text,
   TouchableOpacity,
   View,
+  Modal,
+  TouchableWithoutFeedback,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
@@ -32,6 +34,8 @@ function Index() {
   const backendTargetTemperature = useBackendTargetTemperature();
   const currentTemperature = useCurrentTemperature();
   const targetTemperature = useTargetTemperature();
+
+  const [modalMessage, setModalMessage] = useState("");
 
   const { updateBackendTargetTemperature } =
     useUpdateBackendTargetTemperature();
@@ -83,6 +87,8 @@ function Index() {
               backgroundColor: isInternetConnected
                 ? colors.primary
                 : colors.error,
+              borderWidth: 2,
+              borderColor: colors.border,
             }}
             onPress={toggleIsInternetConnected}
           >
@@ -189,6 +195,8 @@ function Index() {
           <Button
             title="Extreme"
             onPress={() => {
+              setModalMessage("Hi");
+
               if (targetTemperature > 50) {
                 setTargetTemperature(0);
               } else {
@@ -198,6 +206,48 @@ function Index() {
           />
         </View>
       </ScrollView>
+
+      <Modal
+        //style={{ backgroundColor: "red", width: 80, height: 80 }}
+        onDismiss={() => {
+          setModalMessage("");
+        }}
+        visible={!!modalMessage}
+        transparent
+        //backdropColor={"green"}
+        onRequestClose={() => {
+          setModalMessage("");
+        }}
+      >
+        <View
+          className=" justify-center items-center flex-1 self-stretch bg-red-200 "
+          //style={{ width: 300, height: 300 }}
+        >
+          <TouchableOpacity
+            style={{ backgroundColor: "#333333", zIndex: 1 }}
+            className=" self-stretch flex-1 absolute w-full h-full"
+            onPress={() => {
+              setModalMessage("");
+            }}
+          />
+          <TouchableOpacity
+            //pointerEvents="none"
+            className=" absolute"
+            style={{
+              zIndex: 3,
+              pointerEvents: "none",
+              backgroundColor: "green",
+              width: 300,
+              height: 300,
+            }}
+            disabled
+          >
+            <View className=" self-stretch flex-1">
+              <Text>{modalMessage}</Text>
+            </View>
+          </TouchableOpacity>
+        </View>
+      </Modal>
     </SafeAreaView>
   );
 }
