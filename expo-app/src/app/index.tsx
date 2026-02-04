@@ -109,7 +109,7 @@ function Index() {
           </Text>
 
           <Text style={{ fontSize: 48, color: colors.text }}>
-            <Text>Backend Temperature: </Text>
+            <Text>Backend Target Temperature: </Text>
             <Text style={{ color: colors.primary }}>
               {backendTargetTemperature} °C
             </Text>
