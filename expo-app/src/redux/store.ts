@@ -1,5 +1,5 @@
 import { configureStore } from "@reduxjs/toolkit";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { thermostatsApi } from "./api/thermostatsApi/thermostatsApi";
 import { temperaturesSlice } from "./temperaturesSlice/temperaturesSlice";
 
@@ -18,6 +18,7 @@ type RootState = ReturnType<typeof store.getState>;
 type AppDispatch = typeof store.dispatch;
 
 const useAppDispatch: () => AppDispatch = useDispatch;
+const useAppSelector = useSelector.withTypes<RootState>();
 
-export { store, useAppDispatch };
+export { store, useAppDispatch, useAppSelector };
 export type { AppDispatch, RootState };

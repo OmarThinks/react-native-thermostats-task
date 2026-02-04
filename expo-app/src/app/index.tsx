@@ -5,8 +5,18 @@ import {
   useGetThermostatQuery,
   usePostThermostatMutation,
 } from "@/redux/api/thermostatsApi/thermostatsApi";
+import {
+  useBackendTargetTemperature,
+  useCurrentTemperature,
+  useIsInternetConnected,
+  useTargetTemperature,
+  useUpdateBackendTargetTemperature,
+  useUpdateCurrentTemperature,
+  useUpdateIsInternetConnected,
+  useUpdateTargetTemperature,
+} from "@/redux/temperaturesSlice/temperaturesSlice";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import {
   Alert,
   Button,
@@ -18,23 +28,25 @@ import {
 import { SafeAreaView } from "react-native-safe-area-context";
 
 function Index() {
-  const [isInternetConnected, setIsInternetConnected] = useState(true);
+  const isInternetConnected = useIsInternetConnected();
+  const backendTargetTemperature = useBackendTargetTemperature();
+  const currentTemperature = useCurrentTemperature();
+  const targetTemperature = useTargetTemperature();
+
+  const { updateBackendTargetTemperature } =
+    useUpdateBackendTargetTemperature();
+  const { updateCurrentTemperature } = useUpdateCurrentTemperature();
+  const { updateIsInternetConnected } = useUpdateIsInternetConnected();
+  const { updateTargetTemperature } = useUpdateTargetTemperature();
+
   const toggleIsInternetConnected = () =>
-    setIsInternetConnected((previousState) => !previousState);
-  const [targetTemperature, _setTargetTemperature] = useState(30);
+    updateIsInternetConnected(!isInternetConnected);
 
   const setTargetTemperature = (newTemperature: number) => {
-    _setTargetTemperature(Number(newTemperature.toFixed(1)));
+    updateTargetTemperature(Number(newTemperature.toFixed(1)));
   };
 
   const colors = useColors();
-
-  const [currentTemperature, setCurrentTemperature] = useState<null | number>(
-    null,
-  );
-  const [backendTargetTemperature, setBackendTargetTemperature] = useState<
-    null | number
-  >(null);
 
   const { data } = useGetThermostatQuery(
     { canFail: true },
@@ -45,12 +57,12 @@ function Index() {
 
   useEffect(() => {
     if (data?.success && typeof data?.backendCurrentTemperature === "number") {
-      setCurrentTemperature(data.backendCurrentTemperature);
+      updateCurrentTemperature(data.backendCurrentTemperature);
       if (typeof data?.backendTargetTemperature == "number") {
-        setBackendTargetTemperature(data.backendTargetTemperature);
+        updateBackendTargetTemperature(data.backendTargetTemperature);
       }
     }
-  }, [data]);
+  }, [data, updateBackendTargetTemperature, updateCurrentTemperature]);
 
   return (
     <SafeAreaView

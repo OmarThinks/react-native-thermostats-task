@@ -1,9 +1,9 @@
+import { AsyncStorageKeysEnum } from "@/constants/AsyncStorageKeysEnum";
 import { defaultTemperatures } from "@/constants/tempratures";
+import { useAppDispatch, useAppSelector } from "@/redux/store";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import type { PayloadAction } from "@reduxjs/toolkit";
 import { createSlice } from "@reduxjs/toolkit";
-import { useAppDispatch } from "@/redux/store";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import { AsyncStorageKeysEnum } from "@/constants/AsyncStorageKeysEnum";
 
 interface TemperaturesState {
   isInternetConnected: boolean;
@@ -91,8 +91,21 @@ const useUpdateTargetTemperature = () => {
   return { updateTargetTemperature: _updateTargetTemperature };
 };
 
+const useIsInternetConnected = () =>
+  useAppSelector((store) => store.temperatures.isInternetConnected);
+const useTargetTemperature = () =>
+  useAppSelector((store) => store.temperatures.targetTemperature);
+const useCurrentTemperature = () =>
+  useAppSelector((store) => store.temperatures.currentTemperature);
+const useBackendTargetTemperature = () =>
+  useAppSelector((store) => store.temperatures.backendTargetTemperature);
+
 export {
   temperaturesSlice,
+  useBackendTargetTemperature,
+  useCurrentTemperature,
+  useIsInternetConnected,
+  useTargetTemperature,
   useUpdateBackendTargetTemperature,
   useUpdateCurrentTemperature,
   useUpdateIsInternetConnected,
