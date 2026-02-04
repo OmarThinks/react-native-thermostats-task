@@ -5,17 +5,16 @@ import {
   useGetThermostatQuery,
   usePostThermostatMutation,
 } from "@/redux/api/thermostatsApi/thermostatsApi";
+import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import { useEffect, useState } from "react";
 import {
   Alert,
   Button,
   ScrollView,
-  Switch,
   Text,
   TouchableOpacity,
   View,
 } from "react-native";
-import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 function Index() {
@@ -39,14 +38,14 @@ function Index() {
 
   const { data } = useGetThermostatQuery(
     { canFail: true },
-    { pollingInterval: 300, skip: !isInternetConnected },
+    { pollingInterval: 500, skip: !isInternetConnected },
   );
 
   const [postThermostatMutation, { isLoading }] = usePostThermostatMutation();
 
   useEffect(() => {
-    if (data?.success && typeof data?.currentTemperature === "number") {
-      setCurrentTemperature(data.currentTemperature);
+    if (data?.success && typeof data?.backendCurrentTemperature === "number") {
+      setCurrentTemperature(data.backendCurrentTemperature);
       if (typeof data?.backendTargetTemperature == "number") {
         setBackendTargetTemperature(data.backendTargetTemperature);
       }

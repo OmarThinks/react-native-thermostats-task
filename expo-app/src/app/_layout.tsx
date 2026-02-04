@@ -1,16 +1,17 @@
 import "@/global.css";
-import { useGetThermostatCronJobQuery } from "@/redux/api/thermostatsApi/thermostatsApi";
 import { store } from "@/redux/store";
+import { updateCurrentTemperature } from "@/utils/termostats";
 import { Stack } from "expo-router";
+import { useEffect } from "react";
 import { Provider } from "react-redux";
 
 const AppInsideRedux = () => {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const _ = useGetThermostatCronJobQuery(
-    { canFail: false },
-    { pollingInterval: 300 },
-  );
   // This works as a cronjob
+  useEffect(() => {
+    setInterval(() => {
+      updateCurrentTemperature();
+    }, 500);
+  }, []);
 
   return <Stack screenOptions={{ header: HeaderComponent }} />;
 };
