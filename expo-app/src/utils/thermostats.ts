@@ -21,7 +21,7 @@ const getCurrentTemperatureAndTargetTemperatureAsync = async () => {
   return { backendTargetTemperature, backendCurrentTemperature };
 };
 
-const updateCurrentTemperature = async () => {
+const updateCurrentTemperatureCronJob = async () => {
   let { backendCurrentTemperature, backendTargetTemperature } =
     await getCurrentTemperatureAndTargetTemperatureAsync();
 
@@ -45,5 +45,5 @@ const updateCurrentTemperature = async () => {
 
 export {
   getCurrentTemperatureAndTargetTemperatureAsync,
-  updateCurrentTemperature,
+  updateCurrentTemperatureCronJob,
 };

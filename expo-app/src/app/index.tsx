@@ -50,7 +50,7 @@ function Index() {
 
   const { data } = useGetThermostatQuery(
     { canFail: true },
-    { pollingInterval: 500, skip: !isInternetConnected },
+    { pollingInterval: 300, skip: !isInternetConnected },
   );
 
   const [postThermostatMutation, { isLoading }] = usePostThermostatMutation();

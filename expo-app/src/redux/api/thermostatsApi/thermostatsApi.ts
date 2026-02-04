@@ -1,7 +1,7 @@
 import { AsyncStorageKeysEnum } from "@/constants/AsyncStorageKeysEnum";
 import { failureProbability } from "@/constants/failurePercentage";
 import { waitingTime } from "@/constants/waitingTime";
-import { getCurrentTemperatureAndTargetTemperatureAsync } from "@/utils/termostats";
+import { getCurrentTemperatureAndTargetTemperatureAsync } from "@/utils/thermostats";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import type { PostThermostatResponseType } from "./types";
@@ -44,6 +44,8 @@ const getCurrentTemperature = async () => {
   await sleep(waitingTime * Math.random());
 
   if (Math.random() < failureProbability) {
+    console.log("failure");
+
     return {
       data: {
         success: false as false,
@@ -54,6 +56,7 @@ const getCurrentTemperature = async () => {
   let { backendCurrentTemperature, backendTargetTemperature } =
     await getCurrentTemperatureAndTargetTemperatureAsync();
 
+  console.log("success", backendCurrentTemperature);
   return {
     data: {
       success: true as true,

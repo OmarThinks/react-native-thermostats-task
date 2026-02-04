@@ -1,6 +1,6 @@
 const minTemperature = 0;
 const maxTemperature = 100;
-const temperatureStep = 0.3;
+const temperatureStep = 0.1;
 
 const defaultTemperatures = {
   backendTargetTemperature: 10,
