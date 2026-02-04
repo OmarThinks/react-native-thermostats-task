@@ -189,14 +189,13 @@ function Index() {
                   );
                 });
             }}
-            disabled={isLoading}
+            disabled={isLoading || !isInternetConnected}
           />
 
           <Button
             title="Extreme"
             onPress={() => {
               setModalMessage("Hi");
-
               if (targetTemperature > 50) {
                 setTargetTemperature(0);
               } else {
