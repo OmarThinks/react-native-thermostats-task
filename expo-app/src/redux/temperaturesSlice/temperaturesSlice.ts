@@ -1,7 +1,9 @@
 import { defaultTemperatures } from "@/constants/tempratures";
 import type { PayloadAction } from "@reduxjs/toolkit";
 import { createSlice } from "@reduxjs/toolkit";
-import { useAppDispatch } from "../store";
+import { useAppDispatch } from "@/redux/store";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { AsyncStorageKeysEnum } from "@/constants/AsyncStorageKeysEnum";
 
 interface TemperaturesState {
   isInternetConnected: boolean;
@@ -48,6 +50,10 @@ const useUpdateIsInternetConnected = () => {
   const dispatch = useAppDispatch();
   const _updateIsInternetConnected = (isInternetConnected: boolean) => {
     dispatch(updateIsInternetConnected(isInternetConnected));
+    AsyncStorage.setItem(
+      AsyncStorageKeysEnum.FE_isInternetConnected,
+      String(isInternetConnected),
+    );
   };
   return { updateIsInternetConnected: _updateIsInternetConnected };
 };
@@ -55,6 +61,10 @@ const useUpdateCurrentTemperature = () => {
   const dispatch = useAppDispatch();
   const _updateCurrentTemperature = (newTemperature: number) => {
     dispatch(updateCurrentTemperature(newTemperature));
+    AsyncStorage.setItem(
+      AsyncStorageKeysEnum.FE_currentTemperature,
+      String(newTemperature),
+    );
   };
   return { updateCurrentTemperature: _updateCurrentTemperature };
 };
@@ -62,6 +72,10 @@ const useUpdateBackendTargetTemperature = () => {
   const dispatch = useAppDispatch();
   const _updateBackendTargetTemperature = (newTemperature: number) => {
     dispatch(updateBackendTargetTemperature(newTemperature));
+    AsyncStorage.setItem(
+      AsyncStorageKeysEnum.FE_backendTargetTemperature,
+      String(newTemperature),
+    );
   };
   return { updateBackendTargetTemperature: _updateBackendTargetTemperature };
 };
@@ -69,6 +83,10 @@ const useUpdateTargetTemperature = () => {
   const dispatch = useAppDispatch();
   const _updateTargetTemperature = (newTemperature: number) => {
     dispatch(updateTargetTemperature(newTemperature));
+    AsyncStorage.setItem(
+      AsyncStorageKeysEnum.FE_targetTemperature,
+      String(newTemperature),
+    );
   };
   return { updateTargetTemperature: _updateTargetTemperature };
 };
